@@ -126,6 +126,24 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // ========== 背景图自动检测 ==========
+    var heroBg = document.getElementById('heroBg');
+    if (heroBg) {
+        var testImg = new Image();
+        testImg.onload = function () {
+            heroBg.classList.remove('no-image');
+        };
+        testImg.onerror = function () {
+            // 图片不存在，保持 no-image 状态，显示默认渐变
+        };
+        // 获取 CSS 中的背景图 URL
+        var bgStyle = getComputedStyle(heroBg).backgroundImage;
+        var urlMatch = bgStyle.match(/url\(['"]?([^'"()]+)['"]?\)/);
+        if (urlMatch) {
+            testImg.src = urlMatch[1];
+        }
+    }
+
     // ========== 初始状态修复 ==========
     updateNavScroll();
     updateBackToTop();

@@ -198,27 +198,34 @@ ul {
     overflow: hidden;
 }
 
-.hero::before {
-    content: '';
+/* 背景图片层 — Ken Burns 缓慢缩放效果 */
+.hero-bg {
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle at 30% 70%, rgba(255,255,255,.08) 0%, transparent 50%),
-                radial-gradient(circle at 70% 30%, rgba(255,255,255,.05) 0%, transparent 50%);
-    animation: heroPulse 8s ease-in-out infinite;
+    inset: -40px;
+    background-image: url('../img/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    animation: kenBurns 20s ease-in-out infinite alternate;
+    will-change: transform;
 }
 
-@keyframes heroPulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: .6; }
+@keyframes kenBurns {
+    0%   { transform: scale(1); }
+    100% { transform: scale(1.1); }
 }
 
+/* 未上传背景图时隐藏图片层，显示默认渐变 */
+.hero-bg.no-image {
+    display: none;
+}
+
+/* 暗色遮罩，保证文字可读 */
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background: rgba(0,0,0,.35);
+    z-index: 1;
 }
 
 .hero-content {
